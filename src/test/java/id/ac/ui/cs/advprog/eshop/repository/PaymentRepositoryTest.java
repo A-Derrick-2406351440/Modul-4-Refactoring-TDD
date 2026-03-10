@@ -38,19 +38,26 @@ public class PaymentRepositoryTest {
                 1708560000L, "Safira Sudarajat");
         orders.add(order1);
 
-        Map<String, String> paymentDataVoucher = new HashMap<>();
-        paymentDataVoucher.put("voucherCode", "ESHOP00000000AAA");
         Payment payment1 = new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9",orders.get(0),
-                "VOUCHER", paymentDataVoucher);
-        Map<String, String> paymentDataBank = new  HashMap<>();
-        paymentDataVoucher.put("bankName", "a");
-        paymentDataVoucher.put("referenceCode", "0");
-        Payment payment2 = new Payment("b0f81308-9911-40c5-8da4-fa3194485aa1",orders.get(0),
-                "VOUCHER", paymentDataVoucher);
+                "", null);
+        Payment payment2 = new Payment("a2e7e7e7-9a7f-4603-92c2-eaf529271cc9",orders.get(0),
+                "", null);
         payments.add(payment1);
         payments.add(payment2);
     }
+    @Test
+    void testAddPaymentVoucherSuccess(){
+        Payment payment = payments.get(2);
+        Payment result = paymentRepository.save(payment);
 
+        Payment findResult = paymentRepository.findById(payments.get(2).getId());
+        assertEquals(payment.getId(), result.getId());
+        assertEquals(payment.getId(), findResult.getId());
+        assertEquals(payment.getMethod(), findResult.getMethod());
+        assertSame(payment.getPaymentData(), findResult.getPaymentData());
+        assertEquals(payment.getStatus(), findResult.getStatus());
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
+    }
     @Test
     void testAddPaymentSuccess(){
         Payment payment = payments.get(1);
@@ -62,7 +69,7 @@ public class PaymentRepositoryTest {
         assertEquals(payment.getMethod(), findResult.getMethod());
         assertSame(payment.getPaymentData(), findResult.getPaymentData());
         assertEquals(payment.getStatus(), findResult.getStatus());
-        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
     }
 
     @Test
@@ -102,6 +109,6 @@ public class PaymentRepositoryTest {
             paymentRepository.save(payment);
         }
         List<Payment> result = paymentRepository.getAllPayments();
-        assertEquals(2, result.size());
+        assertEquals(3, result.size());
     }
 }
