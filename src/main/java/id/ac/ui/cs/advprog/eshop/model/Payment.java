@@ -37,9 +37,9 @@ public class Payment {
     }
     protected void setPaymentData(Map<String, String>paymentData) {
         if (PaymentMethod.contains(this.method)) {
-            throw new IllegalArgumentException();
+            this.paymentData = paymentData;
         } else {
-            this.paymentData = null;
+            throw new IllegalArgumentException("Invalid payment method");
         }
     }
 }
