@@ -136,4 +136,24 @@ public class PaymentServiceImplTest {
         List<Payment> payment = paymentService.getAllPayment();
         assertSame(payments,payment);
     }
+
+    @Test
+    void testSetStatusRejected() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("voucherCode", "ESHOP00000000AAA");
+        Payment payment = new Payment(orders.get(0), "VOUCHER", paymentData);
+        paymentService.setStatus(payment, PaymentStatus.REJECTED.getValue());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment.getOrder().getStatus());
+    }
+
+    @Test
+    void testSetStatusWaitingPayment() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("voucherCode", "ESHOP00000000AAA");
+        Payment payment = new Payment(orders.get(0), "VOUCHER", paymentData);
+        paymentService.setStatus(payment, PaymentStatus.WAITING_PAYMENT.getValue());
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
+        assertEquals(OrderStatus.WAITINGPAYMENT.getValue(), payment.getOrder().getStatus());
+    }
 }
