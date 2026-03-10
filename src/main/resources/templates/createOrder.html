@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Order</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Create a New Order</h2>
+
+    <form th:action="@{/order/create}" method="post" class="mt-4">
+
+        <div class="form-group">
+            <label for="author">Author (Your Name):</label>
+            <input type="text" class="form-control" id="author" name="author" placeholder="e.g., Budi" required>
+        </div>
+
+        <h4 class="mt-4 mb-3">Add Products</h4>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Product 1 Name</label>
+                    <input type="text" class="form-control" name="productName1" placeholder="e.g., Sampo Cap Bambang" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" class="form-control" name="productQuantity1" min="1" value="1" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Product 2 Name (Optional)</label>
+                    <input type="text" class="form-control" name="productName2" placeholder="e.g., Sabun Cap Usep">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" class="form-control" name="productQuantity2" min="0" value="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Submit Order</button>
+            <a th:href="@{/}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
