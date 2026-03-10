@@ -59,3 +59,12 @@
     - Apabila tidak menerapkan prinsip solid, code kita akan lebih susah untuk dijaga karena code sangat complex dan susah dipahami. Contohnya, ketika kita tidak menerapkan SRP, maka kita akan kebingungan terkait fungsi code tersebut karena adanya hubungan dengan method lain.
     - Code kita akan lebih susah diuji karena tiap fungsionalitas tidak independen yang menyebabkan proses pencarian bug akan sulit karena banyaknya bagian yang terlibat. Contohnya, kita ingin test suatu fungsi di `CarController`. Namun dengan bergantungnya pada fungsi lain kita akan kebingungan mencari bagian mana yang menyebabkan bug.
     - Penambahan fitur baru akan lebih sulit karena ada kemungkinan kita dapat memunculkan bug baru yang disebabkan bagian lain. Hal ini tentunya akan menjadi kesulitan saat ingin menelusuri bagian yang mana menyebabkan fitur tidak berjalan. 
+
+## Module 4
+-   Menurut saya, dengan penerapan TDD flow pengerjaan jadi lebih jelas dan cepat. Dengan membuat test terlebih dahulu, maka saat kita implementasi kita sudah benar-benar bisa memastikan dan memaintain kebenaran code kita.
+-   Menurut saya, code saya sudah mengimplementasikan F.I.R.S.T 
+  - Fast: Karena sudah membuat testing dengan efisien. 
+  - Isolated: Tes berdiri tidak bergantung pada tes yang lain. 
+  - Repeatable: Tes dapat diulang dengan hasil yang konsisten. 
+  - Self-validating: Tes memberikan hasil pass atau fail melalui asersi tanpa intervensi manual. 
+  - Timely: Tes dibuat sebelum implementasi kode.
