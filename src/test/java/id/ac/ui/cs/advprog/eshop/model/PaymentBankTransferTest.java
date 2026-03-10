@@ -30,6 +30,19 @@ class PaymentBankTransferTest {
     }
 
     @Test
+    void testCreatePaymentBankTransferWithoutId() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("bankName", "BCA");
+        paymentData.put("referenceCode", "1234567890");
+
+        Payment payment = new PaymentBankTransfer(orders.get(0), "BANK", paymentData);
+
+        assertNotNull(payment.getId());
+        assertEquals("BANK", payment.getMethod());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
+    }
+
+    @Test
     void testCreatePaymentBankTransferSuccess() {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("bankName", "BCA");
@@ -44,13 +57,22 @@ class PaymentBankTransferTest {
     }
 
     @Test
-    void testCreatePaymentBankTransferFailBankNameEmpty() {
+    void testCreatePaymentBankTransferFailBankNameNull() {
         Map<String, String> paymentData = new HashMap<>();
-        paymentData.put("bankName", ""); // Kosong
+        paymentData.put("bankName", null);
         paymentData.put("referenceCode", "1234567890");
 
         Payment payment = new PaymentBankTransfer("payment-id-123", orders.get(0), "BANK", paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
+    }
 
+    @Test
+    void testCreatePaymentBankTransferFailBankNameBlank() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("bankName", "   ");
+        paymentData.put("referenceCode", "1234567890");
+
+        Payment payment = new PaymentBankTransfer("payment-id-123", orders.get(0), "BANK", paymentData);
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
@@ -61,7 +83,16 @@ class PaymentBankTransferTest {
         paymentData.put("referenceCode", null);
 
         Payment payment = new PaymentBankTransfer("payment-id-123", orders.get(0), "BANK", paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
+    }
 
+    @Test
+    void testCreatePaymentBankTransferFailReferenceCodeBlank() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("bankName", "BCA");
+        paymentData.put("referenceCode", "   ");
+
+        Payment payment = new PaymentBankTransfer("payment-id-123", orders.get(0), "BANK", paymentData);
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 }

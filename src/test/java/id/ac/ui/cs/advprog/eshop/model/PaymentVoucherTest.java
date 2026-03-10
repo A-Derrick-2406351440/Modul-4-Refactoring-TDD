@@ -81,4 +81,22 @@ public class PaymentVoucherTest {
                 "VOUCHER", paymentDataVoucher);
         assertEquals(PaymentStatus.REJECTED.getValue(), payment1.getStatus());
     }
+
+    @Test
+    void testCreatePaymentVoucherWithoutId() {
+        Map<String, String> paymentDataVoucher = new HashMap<>();
+        paymentDataVoucher.put("voucherCode", "ESHOP00000000AAA");
+        Payment payment1 = new PaymentVoucher(orders.get(1), "VOUCHER", paymentDataVoucher);
+        assertNotNull(payment1.getId());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment1.getStatus());
+    }
+
+    @Test
+    void testCreatePaymentVoucherFailNullVoucherCode() {
+        Map<String, String> paymentDataVoucher = new HashMap<>();
+        paymentDataVoucher.put("voucherCode", null);
+        Payment payment1 = new PaymentVoucher("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", orders.get(1),
+                "VOUCHER", paymentDataVoucher);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment1.getStatus());
+    }
 }
