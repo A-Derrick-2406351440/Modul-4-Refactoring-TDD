@@ -2,7 +2,6 @@ package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.service.OrderService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -61,5 +60,19 @@ class OrderControllerTest {
         String viewName = orderController.paymentOrderPost("123", model);
         assertEquals("paymentSuccess", viewName);
         verify(model).addAttribute("paymentId", "123");
+    }
+
+    @Test
+    void testCreateOrderPost() {
+        String viewName = orderController.createOrderPost("Budi", "Sampo", 2, "Sabun", 1);
+        assertEquals("redirect:/order/history", viewName);
+        verify(orderService, times(1)).createOrder(any(Order.class));
+    }
+
+    @Test
+    void testCreateOrderPostWithOneProduct() {
+        String viewName = orderController.createOrderPost("Budi", "Sampo", 2, null, 0);
+        assertEquals("redirect:/order/history", viewName);
+        verify(orderService, times(1)).createOrder(any(Order.class));
     }
 }
