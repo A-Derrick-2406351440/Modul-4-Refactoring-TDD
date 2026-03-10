@@ -25,6 +25,8 @@ public class Payment {
         this.id = UUID.randomUUID().toString();
         this.method = method;
         this.order = order;
+        this.status=PaymentStatus.WAITING_PAYMENT.getValue();
+        setPaymentData(paymentData);
         try{
             setPaymentData(paymentData);
             setStatus(PaymentStatus.SUCCESS.getValue());
