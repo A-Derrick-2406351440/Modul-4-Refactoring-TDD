@@ -38,13 +38,16 @@ public class PaymentRepositoryTest {
                 1708560000L, "Safira Sudarajat");
         orders.add(order1);
 
+        Map<String, String> paymentData = new HashMap<>();
         Payment payment1 = new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9",orders.get(0),
-                "", null);
+                "VOUCHER", paymentData);
         Payment payment2 = new Payment("a2e7e7e7-9a7f-4603-92c2-eaf529271cc9",orders.get(0),
-                "", null);
+                "VOUCHER", paymentData);
+
         payments.add(payment1);
         payments.add(payment2);
     }
+
     @Test
     void testAddPaymentVoucherSuccess(){
         Payment payment = payments.get(1);
@@ -58,6 +61,7 @@ public class PaymentRepositoryTest {
         assertEquals(payment.getStatus(), findResult.getStatus());
         assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
     }
+
     @Test
     void testAddPaymentSuccess(){
         Payment payment = payments.get(1);

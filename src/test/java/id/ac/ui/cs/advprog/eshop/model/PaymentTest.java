@@ -12,9 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PaymentTest {
     List<Payment> payments;
-
     List<Order> orders;
-
     List<Product> products;
 
     @BeforeEach
@@ -40,36 +38,34 @@ public class PaymentTest {
         orders.add(order2);
         orders.add(order3);
     }
+
     @Test
     void testCreatePaymentSucessfulVoucher(){
-        Map<String, String> paymentDataVoucher = new  HashMap<>();
+        Map<String, String> paymentDataVoucher = new HashMap<>();
         paymentDataVoucher.put("voucherCode", "ESHOP00000000AAA");
         Payment payment1 = new Payment("13652556-012a-4c07-b546-54eb1396d79b",orders.get(1),
-                "", paymentDataVoucher);
+                "VOUCHER", paymentDataVoucher);
         assertSame(this.orders.get(1), payment1.getOrder());
-        assertNull(payment1.getPaymentData());
+        assertEquals(paymentDataVoucher, payment1.getPaymentData());
         assertEquals("13652556-012a-4c07-b546-54eb1396d79b", payment1.getId());
-        assertEquals("", payment1.getMethod());
+        assertEquals("VOUCHER", payment1.getMethod());
     }
 
     @Test
-    void testCreatePaymentIsVoucherFail(){
-        Map<String, String> paymentDataVoucher = new  HashMap<>();
-        paymentDataVoucher.put("voucherCode", "ESHOP00000000AAA");
+    void testCreatePaymentWithInvalidMethodFail(){
+        Map<String, String> paymentData = new HashMap<>();
         assertThrows(IllegalArgumentException.class, ()-> {
             new Payment("13652556-012a-4c07-b546-54eb1396d79b",orders.get(1),
-                    "VOUCHER", paymentDataVoucher);
+                    "CASH", paymentData);
         });
     }
 
     @Test
-    void testCreatePaymentIsBankFail(){
-        Map<String, String> paymentDataBank = new  HashMap<>();
-        paymentDataBank.put("bankName", "a");
-        paymentDataBank.put("referenceCode", "0");
+    void testCreatePaymentWithEmptyMethodFail(){
+        Map<String, String> paymentData = new HashMap<>();
         assertThrows(IllegalArgumentException.class, ()-> {
             new Payment("13652556-012a-4c07-b546-54eb1396d79b",orders.get(1),
-                    "BANK", paymentDataBank);
+                    "", paymentData);
         });
     }
 }
