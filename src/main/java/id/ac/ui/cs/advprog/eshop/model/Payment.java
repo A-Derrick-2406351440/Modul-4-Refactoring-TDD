@@ -27,18 +27,15 @@ public class Payment {
         this.order = order;
         this.status=PaymentStatus.WAITING_PAYMENT.getValue();
         setPaymentData(paymentData);
-        try{
-            setPaymentData(paymentData);
-            setStatus(PaymentStatus.SUCCESS.getValue());
-        }catch (IllegalArgumentException e){
-            setStatus(PaymentStatus.REJECTED.getValue());
+    }
+    public void setStatus(String status){
+        if(PaymentStatus.contains(status)){
+            this.status=status;
+        }else{
             throw new IllegalArgumentException();
         }
     }
-    private void setStatus(String status){
-        this.status=status;
-    }
-    private void setPaymentData(Map<String, String>paymentData){
+    public void setPaymentData(Map<String, String>paymentData){
         if (method.equals(PaymentMethod.VOUCHER.getValue())){
             int numOfNumerics = 0;
             for (int i=0; i<paymentData.get("voucherCode").length(); i++){

@@ -47,10 +47,10 @@ public class PaymentRepositoryTest {
     }
     @Test
     void testAddPaymentVoucherSuccess(){
-        Payment payment = payments.get(2);
+        Payment payment = payments.get(1);
         Payment result = paymentRepository.save(payment);
 
-        Payment findResult = paymentRepository.findById(payments.get(2).getId());
+        Payment findResult = paymentRepository.findById(payments.get(1).getId());
         assertEquals(payment.getId(), result.getId());
         assertEquals(payment.getId(), findResult.getId());
         assertEquals(payment.getMethod(), findResult.getMethod());
@@ -109,6 +109,6 @@ public class PaymentRepositoryTest {
             paymentRepository.save(payment);
         }
         List<Payment> result = paymentRepository.getAllPayments();
-        assertEquals(3, result.size());
+        assertEquals(2, result.size());
     }
 }
